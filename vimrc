@@ -35,6 +35,7 @@ call plug#begin()
 Plug 'joshdick/onedark.vim'
 Plug 'vim-airline/vim-airline'
 Plug 'airblade/vim-gitgutter'
+Plug 'mhinz/vim-startify'
 "Git Integration
 Plug 'tpope/vim-fugitive'
 "Files/Search
@@ -47,6 +48,7 @@ Plug 'editorconfig/editorconfig-vim'
 Plug 'vim-ruby/vim-ruby'
 Plug 'tpope/vim-rails'
 Plug 'tpope/vim-endwise'
+Plug 'tpope/vim-surround'
 Plug 'tpope/vim-rake'
 Plug 'tpope/vim-markdown'
 call plug#end()
@@ -109,6 +111,8 @@ fun! StripTrailingWhitespace()
 endfun
 autocmd BufWritePre * call StripTrailingWhitespace()
 autocmd FileType markdown let b:noStripWhitespace=1
+
+let ruby_no_expensive=1
 
 set updatetime=100
 set timeoutlen=1000 ttimeoutlen=10
