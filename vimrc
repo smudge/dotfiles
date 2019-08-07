@@ -51,6 +51,7 @@ Plug 'tpope/vim-endwise'
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-rake'
 Plug 'tpope/vim-markdown'
+Plug 'rust-lang/rust.vim'
 call plug#end()
 filetype plugin indent on
 
@@ -112,7 +113,11 @@ endfun
 autocmd BufWritePre * call StripTrailingWhitespace()
 autocmd FileType markdown let b:noStripWhitespace=1
 
+" RUBY
 let ruby_no_expensive=1
+
+" RUST
+let g:rustfmt_autosave = 1
 
 set updatetime=100
 set timeoutlen=1000 ttimeoutlen=10
