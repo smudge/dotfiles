@@ -8,6 +8,7 @@ brew 'rbenv'
 brew 'rustup'
 brew 'tmux'
 brew 'autojump'
+brew 'exa'
 
 cask 'alacritty'
 cask 'font-hasklig'
