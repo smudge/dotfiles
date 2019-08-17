@@ -9,6 +9,7 @@ brew 'rustup'
 brew 'tmux'
 brew 'autojump'
 brew 'exa'
+brew 'bash-completion'
 
 cask 'alacritty'
 cask 'font-hasklig'
