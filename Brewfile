@@ -1,18 +1,18 @@
-tap "caskroom/cask"
-tap "homebrew/cask-fonts"
+tap 'caskroom/cask'
+tap 'homebrew/cask-fonts'
 
-brew 'vim'
-brew 'fzf'
-brew 'ripgrep'
-brew 'rbenv'
-brew 'rustup'
-brew 'tmux'
 brew 'autojump'
-brew 'exa'
 brew 'bash'
 brew 'bash-completion'
+brew 'exa'
+brew 'fzf'
+brew 'neovim'
+brew 'rbenv'
+brew 'ripgrep'
+brew 'rustup'
+brew 'tmux'
 
 cask 'alacritty'
+cask 'firefox'
 cask 'font-hasklig'
 cask 'google-chrome'
-cask 'firefox'
