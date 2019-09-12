@@ -52,6 +52,9 @@ Plug 'tpope/vim-surround'
 Plug 'tpope/vim-rake'
 Plug 'tpope/vim-markdown'
 Plug 'rust-lang/rust.vim'
+Plug 'pangloss/vim-javascript'
+Plug 'leafgarland/typescript-vim'
+Plug 'maxmellon/vim-jsx-pretty'
 call plug#end()
 filetype plugin indent on
 
