@@ -1,5 +1,7 @@
-if [ "$TERM" == "xterm-256color" ] || [ "$TERM" == "alacritty" ]; then
-  [ -z "$TMUX"  ] && { tmux attach || exec tmux new-session && exit; }
+if type tmux &>/dev/null; then
+  if [ "$TERM" == "xterm-256color" ] || [ "$TERM" == "alacritty" ]; then
+    [ -z "$TMUX"  ] && { tmux attach || exec tmux new-session && exit; }
+  fi
 fi
 
 export FZF_DEFAULT_COMMAND='rg --files --hidden --glob "!.git/*"'
