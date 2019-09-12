@@ -1,3 +1,7 @@
 alias ls="exa"
 alias la="exa -lagh --git"
 alias lt="exa -T --git-ignore"
+
+if type nvim > /dev/null 2>&1; then
+  alias vim='nvim'
+fi
