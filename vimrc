@@ -36,11 +36,11 @@ Plug 'joshdick/onedark.vim'
 Plug 'vim-airline/vim-airline'
 Plug 'airblade/vim-gitgutter'
 Plug 'mhinz/vim-startify'
-"Git Integration
+"Files/Git/Search
 Plug 'tpope/vim-fugitive'
-"Files/Search
 Plug 'scrooloose/nerdtree'
 Plug 'junegunn/fzf' | Plug 'junegunn/fzf.vim'
+Plug 'danro/rename.vim'
 "Linting/Normalizing
 Plug 'w0rp/ale'
 Plug 'editorconfig/editorconfig-vim'
