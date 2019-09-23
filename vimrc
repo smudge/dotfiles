@@ -55,9 +55,7 @@ Plug 'rust-lang/rust.vim'
 Plug 'pangloss/vim-javascript'
 Plug 'leafgarland/typescript-vim'
 Plug 'maxmellon/vim-jsx-pretty'
-Plug 'prabirshrestha/async.vim'
-Plug 'prabirshrestha/vim-lsp'
-Plug 'prabirshrestha/asyncomplete.vim'
+Plug 'neoclide/coc.nvim', {'tag': '*', 'branch': 'release'}
 call plug#end()
 filetype plugin indent on
 
@@ -124,14 +122,6 @@ let ruby_no_expensive=1
 
 " RUST
 let g:rustfmt_autosave = 1
-if executable('rls')
-    au User lsp_setup call lsp#register_server({
-        \ 'name': 'rls',
-        \ 'cmd': {server_info->['rustup', 'run', 'stable', 'rls']},
-        \ 'workspace_config': {'rust': {'clippy_preference': 'on'}},
-        \ 'whitelist': ['rust'],
-        \ })
-endif
 
 set updatetime=100
 set timeoutlen=1000 ttimeoutlen=10
