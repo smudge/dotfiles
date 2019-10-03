@@ -9,6 +9,4 @@ alias du="ncdu --color dark -rr -x --exclude .git --exclude node_modules"
 if type nvim > /dev/null 2>&1; then
   alias vim='nvim'
   alias vi='nvim'
-  # Temporarily map nvim until https://github.com/Homebrew/homebrew-core/issues/44324 is resolved.
-  alias nvim="nvim 2> /dev/null"
 fi
