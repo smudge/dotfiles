@@ -19,4 +19,4 @@ vim +'CocInstall coc-solargraph' +qa
 
 # Setup puma-dev
 sudo puma-dev -setup
-puma-dev -install
+puma-dev -install -timeout 1h
