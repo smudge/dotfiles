@@ -16,3 +16,7 @@ gem install solargraph
 vim +'PlugInstall --sync' +qa
 vim +'CocInstall coc-rls' +qa
 vim +'CocInstall coc-solargraph' +qa
+
+# Setup puma-dev
+sudo puma-dev -setup
+puma-dev -install
