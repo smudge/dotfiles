@@ -18,4 +18,6 @@ if type brew &>/dev/null; then
   fi
 fi
 
+eval "$(nodenv init -)"
+
 source ~/.alias
