@@ -14,8 +14,7 @@ nodenv global $LATEST_NODE
 rustup component add rustfmt rls rust-analysis rust-src
 gem install solargraph
 vim +'PlugInstall --sync' +qa
-vim +'CocInstall coc-rls' +qa
-vim +'CocInstall coc-solargraph' +qa
+vim +'CocInstall coc-rls coc-solargraph coc-tsserver coc-tslint-plugin' +qa
 
 # Setup puma-dev
 sudo puma-dev -setup
