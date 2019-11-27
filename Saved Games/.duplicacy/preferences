@@ -1,0 +1,14 @@
+[
+    {
+        "name": "default",
+        "id": "saved-games",
+        "repository": "",
+        "storage": "\\\\DEEP_THOUGHT\\personal-media\\saved-games\\duplicacy",
+        "encrypted": false,
+        "no_backup": false,
+        "no_restore": false,
+        "no_save_password": false,
+        "nobackup_file": "",
+        "keys": null
+    }
+]
