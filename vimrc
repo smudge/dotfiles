@@ -156,3 +156,4 @@ set nowrap
 set ve+=onemore "put cursor at end of line
 
 autocmd FileType ruby setlocal expandtab shiftwidth=2 tabstop=2 softtabstop=2
+autocmd FileType typescript setlocal expandtab shiftwidth=2 tabstop=2 softtabstop=2
