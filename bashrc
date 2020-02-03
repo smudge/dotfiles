@@ -4,8 +4,6 @@ if type tmux &>/dev/null; then
   fi
 fi
 
-export FZF_DEFAULT_COMMAND='rg --files --hidden --glob "!.git/*"'
-
 HOMEBREW_PREFIX=$(brew --prefix)
 [ -f ${HOMEBREW_PREFIX}/etc/profile.d/autojump.sh ] && . $(brew --prefix)/etc/profile.d/autojump.sh
 if type brew &>/dev/null; then

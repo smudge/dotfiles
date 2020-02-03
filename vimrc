@@ -12,6 +12,26 @@ vmap <C-C> "+y
 set wildmenu
 set wildmode=list:longest
 
+" fzf config - use neovim's floating window feature
+let $FZF_DEFAULT_COMMAND='rg --files --hidden --glob "!.git/*"'
+let $FZF_DEFAULT_OPTS='--layout=reverse'
+let g:fzf_layout = { 'window': 'call FloatingFZF()' }
+function! FloatingFZF()
+  let buf = nvim_create_buf(v:false, v:true)
+  let height = float2nr(&lines * 0.9)
+  let width = float2nr(&columns * 0.6)
+  let horizontal = float2nr((&columns - width) / 2)
+  let vertical = 1
+  let opts = {
+        \ 'relative': 'editor',
+        \ 'row': vertical,
+        \ 'col': horizontal,
+        \ 'width': width,
+        \ 'height': height
+        \ }
+  call nvim_open_win(buf, v:true, opts)
+endfunction
+
 " Easier split pane navigation
 nnoremap <C-J> <C-W><C-J>
 nnoremap <C-K> <C-W><C-K>
