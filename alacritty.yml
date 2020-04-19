@@ -83,7 +83,7 @@ live_config_reload: true
 #  program: /bin/bash
 #  args:
 #    - --login
-working_directory: 'src'
+#working_directory: 'src'
 
 enable_experimental_conpty_backend: false
 alt_send_esc: true
