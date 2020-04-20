@@ -22,7 +22,6 @@ brew 'tmux'
 
 cask 'alacritty'
 cask 'firefox'
-cask 'flux'
 cask 'font-hasklig'
 cask 'google-chrome'
 cask 'recordit'
