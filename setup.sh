@@ -17,6 +17,12 @@ tmux start-server
 tmux new-session -d
 ~/.tmux/plugins/tpm/scripts/install_plugins.sh
 
+# TODO: Install rust/cargo
+
+# Set "Night Shift" default temp to 100
+cargo install nightshift
+nightshift temp 100
+
 # Support for the Language Server Protocol
 rustup component add rustfmt rust-src
 rustup component remove rls rust-analysis
