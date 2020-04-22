@@ -18,7 +18,9 @@ tmux new-session -d
 ~/.tmux/plugins/tpm/scripts/install_plugins.sh
 
 # Support for the Language Server Protocol
-rustup component add rustfmt rls rust-analysis rust-src
+rustup component add rustfmt rust-src
+rustup component remove rls rust-analysis
 gem install solargraph
 vim +'PlugInstall --sync' +qa
-vim +'CocInstall coc-rls coc-solargraph coc-tsserver coc-tslint-plugin' +qa
+vim +'CocUninstall coc-rls' +qa
+vim +'CocInstall coc-rust-analyzer coc-solargraph coc-tsserver coc-tslint-plugin' +qa
