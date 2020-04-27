@@ -21,7 +21,8 @@ tmux new-session -d
 
 # Set "Night Shift" default temp to 100
 cargo install nightshift
-nightshift temp 100
+nightshift temp 78
+nightshift schedule
 
 # Support for the Language Server Protocol
 rustup component add rustfmt rust-src
