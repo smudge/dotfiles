@@ -24,6 +24,8 @@ tmux new-session -d
 rustup component add rustfmt rust-src
 rustup component remove rls rust-analysis
 gem install solargraph
+vim +'PlugUpgrade' +qa
+vim +'PlugUpdate' +qa
 vim +'PlugInstall --sync' +qa
 vim +'CocUninstall coc-rls' +qa
 vim +'CocInstall coc-rust-analyzer coc-solargraph coc-tsserver coc-tslint-plugin' +qa
