@@ -1,6 +1,6 @@
 #!/bin/bash
 
-defaults write -g InitialKeyRepeat -int 10 # default is 15 (225 ms)
+defaults write -g InitialKeyRepeat -int 12 # default is 15 (225 ms)
 defaults write -g KeyRepeat -int 1 # default is 2 (30 ms)
 
 brew bundle
