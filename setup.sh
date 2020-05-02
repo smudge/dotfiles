@@ -20,12 +20,17 @@ tmux start-server
 tmux new-session -d
 ~/.tmux/plugins/tpm/scripts/install_plugins.sh
 
+# TODO: Install rust/cargo
+
+# Set "Night Shift" default temp to 100
+cargo install nightlight
+nightlight temp 78
+nightlight schedule
+
 # Support for the Language Server Protocol
 rustup component add rustfmt rust-src
-rustup component remove rls rust-analysis
 gem install solargraph
 vim +'PlugUpgrade' +qa
 vim +'PlugUpdate' +qa
 vim +'PlugInstall --sync' +qa
-vim +'CocUninstall coc-rls' +qa
 vim +'CocInstall coc-rust-analyzer coc-solargraph coc-tsserver coc-tslint-plugin' +qa
