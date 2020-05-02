@@ -20,9 +20,9 @@ tmux new-session -d
 # TODO: Install rust/cargo
 
 # Set "Night Shift" default temp to 100
-cargo install nightshift
-nightshift temp 78
-nightshift schedule
+cargo install nightlight
+nightlight temp 78
+nightlight schedule
 
 # Support for the Language Server Protocol
 rustup component add rustfmt rust-src
