@@ -26,8 +26,6 @@ nightlight schedule
 
 # Support for the Language Server Protocol
 rustup component add rustfmt rust-src
-rustup component remove rls rust-analysis
 gem install solargraph
 vim +'PlugInstall --sync' +qa
-vim +'CocUninstall coc-rls' +qa
 vim +'CocInstall coc-rust-analyzer coc-solargraph coc-tsserver coc-tslint-plugin' +qa
