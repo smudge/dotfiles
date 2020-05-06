@@ -56,6 +56,7 @@ Plug 'joshdick/onedark.vim'
 Plug 'vim-airline/vim-airline'
 Plug 'airblade/vim-gitgutter'
 Plug 'mhinz/vim-startify'
+Plug 'machakann/vim-highlightedyank'
 "Files/Git/Search
 Plug 'tpope/vim-fugitive'
 Plug 'scrooloose/nerdtree'
@@ -137,6 +138,9 @@ let g:airline#extensions#tabline#buffer_min_count = 2
 let g:airline#extensions#tabline#formatter = 'unique_tail_improved'
 let g:airline#extensions#ale#enabled = 1
 let g:ale_ruby_rubocop_executable = 'bundle'
+
+" highlight yanked but for less time
+let g:highlightedyank_highlight_duration = 300
 
 " trip trailing whitespace EXCEPT for markdown files
 fun! StripTrailingWhitespace()
