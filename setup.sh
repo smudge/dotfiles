@@ -5,6 +5,10 @@ defaults write -g KeyRepeat -int 1 # default is 2 (30 ms)
 
 brew bundle
 
+# Set "Night Shift" default temp to 100
+nightlight temp 78
+nightlight schedule start
+
 # Install the latest node version:
 LATEST_NODE=$(nodenv install --list | sort -rn | head -n 1)
 nodenv install -s $LATEST_NODE
@@ -21,11 +25,6 @@ tmux new-session -d
 ~/.tmux/plugins/tpm/scripts/install_plugins.sh
 
 # TODO: Install rust/cargo
-
-# Set "Night Shift" default temp to 100
-cargo install nightlight
-nightlight temp 78
-nightlight schedule
 
 # Support for the Language Server Protocol
 rustup component add rustfmt rust-src
