@@ -5,7 +5,7 @@ defaults write -g KeyRepeat -int 1 # default is 2 (30 ms)
 
 brew bundle
 
-# Set "Night Shift" default temp to 100
+# Set up my "Night Shift" defaults
 nightlight temp 78
 nightlight schedule start
 
