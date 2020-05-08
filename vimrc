@@ -19,7 +19,7 @@ let g:fzf_layout = { 'window': 'call FloatingFZF()' }
 function! FloatingFZF()
   let buf = nvim_create_buf(v:false, v:true)
   let height = float2nr(&lines * 0.9)
-  let width = float2nr(&columns * 0.6)
+  let width = float2nr(&columns * 0.9)
   let horizontal = float2nr((&columns - width) / 2)
   let vertical = 1
   let opts = {
