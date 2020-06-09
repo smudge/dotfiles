@@ -17,5 +17,6 @@ if type brew &>/dev/null; then
 fi
 
 eval "$(nodenv init -)"
+eval "$(direnv hook bash)"
 
 source ~/.alias

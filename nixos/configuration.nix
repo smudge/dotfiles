@@ -61,12 +61,6 @@
     hardwareClockInLocalTime = true;
   };
 
-  # List packages installed in system profile. To search, run:
-  # $ nix search wget
-  # environment.systemPackages = with pkgs; [
-  #   wget vim
-  # ];
-
   # Some programs need SUID wrappers, can be configured further or are
   # started in user sessions.
   # programs.mtr.enable = true;
@@ -109,6 +103,14 @@
   services.xserver.displayManager.lightdm.enable = true;
   services.xserver.displayManager.lightdm.greeters.pantheon.enable = true;
   services.xserver.desktopManager.pantheon.enable = true;
+
+  # Enable lorri: a wrapper for direnv and nix-shell
+  services.lorri.enable = true;
+
+  # System packages (installed globally)
+  environment.systemPackages = with pkgs; [
+    direnv
+  ];
 
   # Define a user account. Don't forget to set a password with ‘passwd’.
   users.users.smudge = {
