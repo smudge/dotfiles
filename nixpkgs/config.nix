@@ -18,6 +18,7 @@
         ruby
         hasklig
         alacritty
+        firefox
       ];
     };
   };
