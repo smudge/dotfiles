@@ -12,6 +12,8 @@ tmux source ~/.tmux.conf
 # Support for the Language Server Protocol
 rustup install stable
 rustup default stable
-rustup component add rustfmt rls rust-analysis rust-src
+rustup component add rustfmt rust-src
+nvim +'PlugUpgrade' +qa
+nvim +'PlugUpdate' +qa
 nvim +'PlugInstall --sync' +qa
-nvim +'CocInstall coc-rls' +qa
+nvim +'CocInstall coc-rust-analyzer coc-solargraph coc-tsserver coc-tslint-plugin' +qa
