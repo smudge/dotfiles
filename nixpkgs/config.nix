@@ -10,6 +10,7 @@
         git
         ncdu
         neovim
+        nodejs
         ripgrep
         tmux
         hasklig
