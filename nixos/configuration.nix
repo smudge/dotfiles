@@ -101,6 +101,12 @@
   services.xserver.videoDrivers = [ "nvidia" ];
   services.xserver.layout = "us";
 
+  # support trackpads and bluetooth inputs
+  hardware.bluetooth.enable = true;
+  services.xserver = {
+    libinput.enable = true;
+  };
+
   # Set a faster key repeat.
   services.xserver = {
     autoRepeatDelay = 200;
@@ -123,7 +129,7 @@
   # Define a user account. Don't forget to set a password with ‘passwd’.
   users.users.smudge = {
     isNormalUser = true;
-    extraGroups = [ "wheel" ]; # Enable ‘sudo’ for the user.
+    extraGroups = [ "wheel" "lp" ]; # Enable ‘sudo’ for the user.
   };
 
   # This value determines the NixOS release from which the default
