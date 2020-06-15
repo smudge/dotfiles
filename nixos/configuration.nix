@@ -121,15 +121,16 @@
   # Enable lorri: a wrapper for direnv and nix-shell
   services.lorri.enable = true;
 
-  # System packages (installed globally)
+# System packages (installed globally)
   environment.systemPackages = with pkgs; [
     direnv
+    libinput-gestures
   ];
 
   # Define a user account. Don't forget to set a password with ‘passwd’.
   users.users.smudge = {
     isNormalUser = true;
-    extraGroups = [ "wheel" "lp" ]; # Enable ‘sudo’ for the user.
+    extraGroups = [ "wheel" "lp" "input" ]; # sudo, bluetooth, input gestures
   };
 
   # This value determines the NixOS release from which the default
