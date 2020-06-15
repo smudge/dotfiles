@@ -25,6 +25,14 @@
       devices = ["nodev"];
       efiSupport = true;
       useOSProber = true;
+      extraEntries = ''
+        menuentry "Reboot" {
+          reboot
+        }
+        menuentry "Poweroff" {
+          halt
+        }
+      '';
     };
   };
 
