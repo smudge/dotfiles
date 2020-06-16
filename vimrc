@@ -66,6 +66,7 @@ Plug 'danro/rename.vim'
 Plug 'w0rp/ale'
 Plug 'editorconfig/editorconfig-vim'
 "Languages/Syntax
+Plug 'LnL7/vim-nix'
 Plug 'vim-ruby/vim-ruby'
 Plug 'tpope/vim-rails'
 Plug 'tpope/vim-endwise'
