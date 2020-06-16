@@ -32,4 +32,4 @@ gem install solargraph
 vim +'PlugUpgrade' +qa
 vim +'PlugUpdate' +qa
 vim +'PlugInstall --sync' +qa
-vim +'CocInstall coc-rust-analyzer coc-solargraph coc-tsserver coc-tslint-plugin' +qa
+vim +'CocInstall coc-solargraph coc-tsserver coc-tslint-plugin' +qa
