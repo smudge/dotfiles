@@ -19,4 +19,7 @@ fi
 eval "$(nodenv init -)"
 eval "$(direnv hook bash)"
 
+export RUBYFMT_USE_RELEASE=1
+alias rubyfmt="~/.rbenv/versions/2.6.5/bin/ruby --disable=all ~/src/rubyfmt/rubyfmt.rb"
+
 source ~/.alias
