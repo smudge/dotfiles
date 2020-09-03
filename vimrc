@@ -181,5 +181,10 @@ set ve+=onemore "put cursor at end of line
 set lazyredraw
 set ttyfast
 
+autocmd FileType html setlocal expandtab shiftwidth=2 tabstop=2 softtabstop=2
 autocmd FileType ruby setlocal expandtab shiftwidth=2 tabstop=2 softtabstop=2
 autocmd FileType typescript setlocal expandtab shiftwidth=2 tabstop=2 softtabstop=2
+
+" Spell-check Markdown files and Git Commit Messages
+autocmd FileType markdown setlocal spell
+autocmd FileType gitcommit setlocal spell
