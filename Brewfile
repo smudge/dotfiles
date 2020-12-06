@@ -19,6 +19,7 @@ brew 'rbenv'
 brew 'ripgrep'
 brew 'rustup'
 brew 'tmux'
+brew 'yarn'
 
 cask 'alacritty'
 cask 'firefox'
