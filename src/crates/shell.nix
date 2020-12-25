@@ -10,5 +10,8 @@ with nixpkgs; stdenv.mkDerivation {
     nixpkgs.latest.rustChannels.nightly.rust
     unstable.rust-analyzer
     unstable.rustfmt
+    glib.dev
+    dbus
+    pkgconfig
   ];
 }
