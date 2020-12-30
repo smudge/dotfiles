@@ -73,6 +73,7 @@ Plug 'tpope/vim-endwise'
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-rake'
 Plug 'tpope/vim-markdown'
+Plug 'iamcco/markdown-preview.nvim', { 'do': { -> mkdp#util#install() }, 'for': ['markdown', 'vim-plug']}
 Plug 'rust-lang/rust.vim'
 Plug 'pangloss/vim-javascript'
 Plug 'leafgarland/typescript-vim'
