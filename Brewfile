@@ -1,4 +1,3 @@
-tap 'caskroom/cask'
 tap 'homebrew/cask-fonts'
 tap 'smudge/smudge'
 
