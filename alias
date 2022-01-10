@@ -7,7 +7,7 @@ alias cat='bat --paging=never --style=plain'
 alias du="ncdu --color dark -rr -x --exclude .git --exclude node_modules"
 
 gap() {
-  git diff -U1 -G $1 --pickaxe-regex | grepdiff -E $1 --output-matching=hunk | git apply --cached
+  git diff -U1 | grepdiff "$1" --output-matching=hunk | git apply --cached
 }
 
 if type nvim > /dev/null 2>&1; then
