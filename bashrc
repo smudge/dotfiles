@@ -43,5 +43,10 @@ if type brew &>/dev/null; then
     done
   fi
 
+  if [[ -f "$HOMEBREW_ROOT/etc/bash_completion.d/git-completion.bash" ]]; then
+    export GIT_PS1_SHOWDIRTYSTATE=1 GIT_PS1_SHOWCOLORHINTS=1 GIT_PS1_HIDE_IF_PWD_IGNORED=1
+    export PROMPT_COMMAND='__git_ps1 "\W" "\\\$ "'
+  fi
+
   [ -f $HOMEBREW_ROOT/etc/profile.d/autojump.sh ] && . $HOMEBREW_ROOT/etc/profile.d/autojump.sh
 fi
