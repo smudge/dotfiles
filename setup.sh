@@ -11,8 +11,8 @@ nightlight schedule start
 
 # Install the latest node version:
 LATEST_NODE=$(nodenv install --list | sort -rn | head -n 1)
-nodenv install -s $LATEST_NODE
-nodenv global $LATEST_NODE
+nodenv install -s "$LATEST_NODE"
+nodenv global "$LATEST_NODE"
 
 # TODO: Install dotfiles, warn about overwriting changes
 # TODO: Source installed dotfiles
@@ -32,4 +32,4 @@ gem install solargraph
 vim +'PlugUpgrade' +qa
 vim +'PlugUpdate' +qa
 vim +'PlugInstall --sync' +qa
-vim +'CocInstall coc-solargraph coc-tsserver coc-tslint-plugin' +qa
+vim +'CocInstall coc-solargraph coc-tsserver coc-tslint-plugin coc-java' +qa
