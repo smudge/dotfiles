@@ -57,6 +57,8 @@ Plug 'vim-airline/vim-airline'
 Plug 'airblade/vim-gitgutter'
 Plug 'mhinz/vim-startify'
 Plug 'machakann/vim-highlightedyank'
+Plug 'junegunn/goyo.vim'
+Plug 'junegunn/limelight.vim'
 "Files/Git/Search
 Plug 'tpope/vim-fugitive'
 Plug 'scrooloose/nerdtree'
@@ -73,7 +75,8 @@ Plug 'tpope/vim-endwise'
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-rake'
 Plug 'tpope/vim-markdown'
-Plug 'iamcco/markdown-preview.nvim', { 'do': { -> mkdp#util#install() }, 'for': ['markdown', 'vim-plug']}
+Plug 'mzlogin/vim-markdown-toc'
+Plug 'cnlinbo/markdown-preview.nvim', { 'branch': 'linbo', 'do': 'cd app && yarn install' }
 Plug 'rust-lang/rust.vim'
 Plug 'pangloss/vim-javascript'
 Plug 'leafgarland/typescript-vim'
@@ -182,6 +185,7 @@ set ve+=onemore "put cursor at end of line
 set lazyredraw
 set ttyfast
 
+autocmd FileType css setlocal expandtab shiftwidth=4 tabstop=4 softtabstop=4
 autocmd FileType html setlocal expandtab shiftwidth=2 tabstop=2 softtabstop=2
 autocmd FileType ruby setlocal expandtab shiftwidth=2 tabstop=2 softtabstop=2
 autocmd FileType typescript setlocal expandtab shiftwidth=2 tabstop=2 softtabstop=2
