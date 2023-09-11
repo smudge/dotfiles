@@ -1,6 +1,6 @@
-alias ls="exa"
-alias la="exa -lagh --git"
-alias lt="exa -T --git-ignore"
+alias ls="eza"
+alias la="eza -lagh --git"
+alias lt="eza -T --git-ignore"
 
 alias cat='bat --paging=never --style=plain'
 

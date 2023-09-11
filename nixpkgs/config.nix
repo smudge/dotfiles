@@ -6,7 +6,7 @@
       paths = [
         autojump
         bat
-        exa
+        eza
         fzf
         git
         ncdu
