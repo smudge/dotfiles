@@ -91,6 +91,7 @@
       ls = "eza";
       cat = "bat --paging=never --style=plain";
       du = "ncdu --color dark -rr -x --exclude .git --exclude node_modules";
+      j = "autojump";
       vim = "nvim";
       vi = "nvim";
     };
@@ -98,6 +99,10 @@
      eval "$(direnv hook bash)"
     '';
   };
+
+  # Enable autojump
+  programs.autojump.enable = true;
+  programs.autojump.enableBashIntegration = true;
 
   # Let Home Manager install and manage itself.
   programs.home-manager.enable = true;

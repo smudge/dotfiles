@@ -5,5 +5,5 @@
 	name = smudge
 	email = nathan@ngriffith.com
 [alias]
-        lg = log --color --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit
-        cleanup = ! git branch --merged master | grep -v '^[ *]*master$' | xargs git branch -d
+	lg = log --color --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit
+	cleanup = ! git branch --merged main | grep -v '^[ *]*main$' | xargs git branch -d
