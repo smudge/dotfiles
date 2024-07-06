@@ -5,7 +5,8 @@ set nocompatible
 
 " Mouse & Clipboard
 set mouse=a "i dare you to call me lazy
-set clipboard+=unnamed "use system clipboard
+set clipboard^=unnamed,unnamedplus "use system clipboard (cross-platform)
+
 vmap <C-C> "+y
 
 " Show autocomplete menus. Make it work like bash completion.
