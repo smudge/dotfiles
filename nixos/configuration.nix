@@ -40,7 +40,8 @@
   };
 
   # Use boot spinner
-  # boot.plymouth.enable = true;
+  boot.kernelParams = ["quiet"];
+  boot.plymouth.enable = true;
 
   # Enable networking
   networking.networkmanager.enable = true;
