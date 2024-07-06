@@ -97,6 +97,13 @@
       vim = "nvim";
       vi = "nvim";
     };
+    initExtra = ''
+      if type tmux &>/dev/null; then
+        if [ "$TERM" == "xterm-256color" ] || [ "$TERM" == "alacritty" ]; then
+          [ -z "$TMUX"  ] && { tmux attach || exec tmux new-session && exit; }
+        fi
+      fi
+    '';
     bashrcExtra = ''
      eval "$(direnv hook bash)"
     '';
