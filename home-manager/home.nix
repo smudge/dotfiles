@@ -39,6 +39,8 @@
     pkgs.hasklig
     pkgs.alacritty
     pkgs.firefox
+    pkgs.ludusavi
+    pkgs.wine64
     # pkgs.obsidian - version of electron is insecure
 
     # # It is sometimes useful to fine-tune packages, for example, by applying
