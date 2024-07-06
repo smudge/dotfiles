@@ -195,7 +195,7 @@
   users.users.smudge = {
     isNormalUser = true;
     description = "Nathan Griffith";
-    extraGroups = [ "networkmanager" "wheel" "input" ];
+    extraGroups = [ "networkmanager" "wheel" "lp" "input" ];
     packages = with pkgs; [
       home-manager
     ];
