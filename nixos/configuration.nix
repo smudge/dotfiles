@@ -149,13 +149,13 @@
 
   # Enable the X11 windowing system.
   services.xserver.enable = true;
-  services.xserver.layout = "us";
-  services.xserver.xkbVariant = "";
+  services.xserver.xkb.layout = "us";
+  services.xserver.xkb.variant = "";
   services.xserver.excludePackages = [ pkgs.xterm ];
 
   # support trackpads.
-  services.xserver.libinput.enable = true;
-  # services.touchegg.enable = true;
+  services.libinput.enable = true;
+  services.touchegg.enable = true;
 
   # Set a faster key repeat.
   services.xserver = {
@@ -197,8 +197,15 @@
     gnome.baobab
     gnome.file-roller
     libinput-gestures
+    touchegg
     # direnv
     # wget
+
+    # Missing GNOME features:
+    gnomeExtensions.x11-gestures # basic gestures
+    gnomeExtensions.gesture-improvements # better gestures
+    gnomeExtensions.desktop-icons-ng-ding # desktop icons
+    gnomeExtensions.appindicator # tray icons
   ];
 
   # Define a user account. Don't forget to set a password with ‘passwd’.
