@@ -117,6 +117,9 @@
   # Enable CUPS to print documents.
   services.printing.enable = true;
 
+  # Enable bluetooth.
+  hardware.bluetooth.enable = true;
+
   # Enable sound.
   sound.enable = true;
   hardware.pulseaudio.enable = false;
@@ -140,10 +143,9 @@
   services.xserver.xkbVariant = "";
   services.xserver.excludePackages = [ pkgs.xterm ];
 
-  # support trackpads and bluetooth inputs
-  hardware.bluetooth.enable = true;
-  # services.xserver.libinput.enable = true;
-  services.touchegg.enable = true;
+  # support trackpads.
+  services.xserver.libinput.enable = true;
+  # services.touchegg.enable = true;
 
   # Set a faster key repeat.
   services.xserver = {
@@ -171,6 +173,7 @@
   # List packages installed in system profile. To search, run:
   # $ nix search wget
   environment.systemPackages = with pkgs; [
+    xclip # for neovim clipboard
     firefox
     alacritty
     gnome.nautilus
@@ -183,8 +186,8 @@
     gnome.eog
     gnome.baobab
     gnome.file-roller
+    libinput-gestures
     # direnv
-    # libinput-gestures
     # wget
   ];
 
@@ -192,7 +195,7 @@
   users.users.smudge = {
     isNormalUser = true;
     description = "Nathan Griffith";
-    extraGroups = [ "networkmanager" "wheel" ];
+    extraGroups = [ "networkmanager" "wheel" "input" ];
     packages = with pkgs; [
       home-manager
     ];
