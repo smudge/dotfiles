@@ -16,9 +16,12 @@
   # Because intel:
   hardware.cpu.intel.updateMicrocode = true;
 
+  # Support NTFS:
+  boot.supportedFilesystems = [ "ntfs" ];
+
   # Use the systemd-boot EFI boot loader.
   boot.loader = {
-    systemd-boot.enable = true;
+    systemd-boot.enable = false;
     efi.canTouchEfiVariables = true;
     grub = {
       enable = true;
@@ -37,31 +40,31 @@
   };
 
   # Use boot spinner
-  boot.plymouth.enable = true;
+  # boot.plymouth.enable = true;
 
-  # Use in-memory /tmp
-  boot.tmpOnTmpfs = true;
-
+  # Enable networking
+  networking.networkmanager.enable = true;
   networking.hostName = "smudge-nix"; # Define your hostname.
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
-
-  # The global useDHCP flag is deprecated, therefore explicitly set to false here.
-  # Per-interface useDHCP will be mandatory in the future, so this generated config
-  # replicates the default behaviour.
-  networking.useDHCP = false;
-  networking.interfaces.enp4s0.useDHCP = true;
-  networking.interfaces.wlp5s0.useDHCP = true;
 
   # Configure network proxy if necessary
   # networking.proxy.default = "http://user:password@proxy:port/";
   # networking.proxy.noProxy = "127.0.0.1,localhost,internal.domain";
 
   # Select internationalisation properties.
-  # i18n.defaultLocale = "en_US.UTF-8";
-  # console = {
-  #   font = "Lat2-Terminus16";
-  #   keyMap = "us";
-  # };
+  i18n.defaultLocale = "en_US.UTF-8";
+
+  i18n.extraLocaleSettings = {
+    LC_ADDRESS = "en_US.UTF-8";
+    LC_IDENTIFICATION = "en_US.UTF-8";
+    LC_MEASUREMENT = "en_US.UTF-8";
+    LC_MONETARY = "en_US.UTF-8";
+    LC_NAME = "en_US.UTF-8";
+    LC_NUMERIC = "en_US.UTF-8";
+    LC_PAPER = "en_US.UTF-8";
+    LC_TELEPHONE = "en_US.UTF-8";
+    LC_TIME = "en_US.UTF-8";
+  };
 
   # Set your time zone.
   time = {
@@ -69,14 +72,36 @@
     hardwareClockInLocalTime = true;
   };
 
+  # Disable the NixOS documentation app.
+  documentation.nixos.enable = false;
+
   # Some programs need SUID wrappers, can be configured further or are
   # started in user sessions.
   # programs.mtr.enable = true;
   # programs.gnupg.agent = {
   #   enable = true;
   #   enableSSHSupport = true;
-  #   pinentryFlavor = "gnome3";
   # };
+
+  programs = {
+    firefox.nativeMessagingHosts.packages = [
+      pkgs.gnome-browser-connector
+    ];
+    neovim = {
+      enable = true;
+      defaultEditor = true;
+    };
+    git = {
+      enable = true;
+      package = pkgs.gitFull;
+      config.credential.helper = "libsecret";
+    };
+    steam = {
+      enable = true;
+      remotePlay.openFirewall = true; # Open ports in the firewall for Steam Remote Play
+      dedicatedServer.openFirewall = true; # Open ports in the firewall for Source Dedicated Server
+    };
+  };
 
   # List services that you want to enable:
 
@@ -90,22 +115,35 @@
   # networking.firewall.enable = false;
 
   # Enable CUPS to print documents.
-  # services.printing.enable = true;
+  services.printing.enable = true;
 
   # Enable sound.
   sound.enable = true;
-  hardware.pulseaudio.enable = true;
+  hardware.pulseaudio.enable = false;
+  security.rtkit.enable = true;
+  services.pipewire = {
+    enable = true;
+    alsa.enable = true;
+    alsa.support32Bit = true;
+    pulse.enable = true;
+    # If you want to use JACK applications, uncomment this
+    #jack.enable = true;
+
+    # use the example session manager (no others are packaged yet so this is enabled by default,
+    # no need to redefine it in your config for now)
+    # media-session.enable = true;
+  };
 
   # Enable the X11 windowing system.
   services.xserver.enable = true;
-  services.xserver.videoDrivers = [ "nvidia" ];
   services.xserver.layout = "us";
+  services.xserver.xkbVariant = "";
+  services.xserver.excludePackages = [ pkgs.xterm ];
 
   # support trackpads and bluetooth inputs
   hardware.bluetooth.enable = true;
-  services.xserver = {
-    libinput.enable = true;
-  };
+  # services.xserver.libinput.enable = true;
+  services.touchegg.enable = true;
 
   # Set a faster key repeat.
   services.xserver = {
@@ -114,23 +152,50 @@
   };
 
   # Enable the KDE Desktop Environment.
-  services.xserver.displayManager.lightdm.enable = true;
-  services.xserver.displayManager.lightdm.greeters.pantheon.enable = true;
-  services.xserver.desktopManager.pantheon.enable = true;
+  # services.xserver.displayManager.lightdm.enable = true;
+  # services.xserver.displayManager.lightdm.greeters.pantheon.enable = true;
+  # services.xserver.desktopManager.pantheon.enable = true;
+
+  # Enable the GNOME Desktop Environment.
+  services.xserver.displayManager.gdm.enable = true;
+  services.xserver.desktopManager.gnome.enable = true;
+
+  # Disable GNOME core utilities.
+  services.gnome.core-utilities.enable = false;
+  environment.gnome.excludePackages = [ pkgs.gnome-tour ];
 
   # Enable lorri: a wrapper for direnv and nix-shell
-  services.lorri.enable = true;
+  # services.lorri.enable = true;
 
-# System packages (installed globally)
+  # System packages (installed globally)
+  # List packages installed in system profile. To search, run:
+  # $ nix search wget
   environment.systemPackages = with pkgs; [
-    direnv
-    libinput-gestures
+    firefox
+    alacritty
+    gnome.nautilus
+    gnome.gnome-disk-utility
+    gnome.gnome-system-monitor
+    gnome.gnome-screenshot
+    gnome.evince
+    gnome.totem
+    gnome.gedit
+    gnome.eog
+    gnome.baobab
+    gnome.file-roller
+    # direnv
+    # libinput-gestures
+    # wget
   ];
 
   # Define a user account. Don't forget to set a password with ‘passwd’.
   users.users.smudge = {
     isNormalUser = true;
-    extraGroups = [ "wheel" "lp" "input" ]; # sudo, bluetooth, input gestures
+    description = "Nathan Griffith";
+    extraGroups = [ "networkmanager" "wheel" ];
+    packages = with pkgs; [
+      home-manager
+    ];
   };
 
   # This value determines the NixOS release from which the default
@@ -139,5 +204,6 @@
   # this value at the release version of the first install of this system.
   # Before changing this value read the documentation for this option
   # (e.g. man configuration.nix or on https://nixos.org/nixos/options.html).
-  system.stateVersion = "20.03"; # Did you read the comment?
+  system.stateVersion = "23.11"; # Did you read the comment?
+
 }
