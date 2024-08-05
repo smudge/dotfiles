@@ -60,10 +60,12 @@ Plug 'mhinz/vim-startify'
 Plug 'machakann/vim-highlightedyank'
 Plug 'junegunn/goyo.vim'
 Plug 'junegunn/limelight.vim'
+Plug 'christoomey/vim-tmux-navigator'
 "Files/Git/Search
 Plug 'tpope/vim-fugitive'
 Plug 'scrooloose/nerdtree'
-Plug 'junegunn/fzf' | Plug 'junegunn/fzf.vim'
+Plug 'junegunn/fzf'
+Plug 'junegunn/fzf.vim'
 Plug 'danro/rename.vim'
 "Linting/Normalizing
 Plug 'w0rp/ale'
