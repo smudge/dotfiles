@@ -77,13 +77,19 @@ Plug 'tpope/vim-rails'
 Plug 'tpope/vim-endwise'
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-rake'
-Plug 'tpope/vim-markdown'
-Plug 'mzlogin/vim-markdown-toc'
-Plug 'cnlinbo/markdown-preview.nvim', { 'branch': 'linbo', 'do': 'cd app && yarn install' }
 Plug 'rust-lang/rust.vim'
 Plug 'pangloss/vim-javascript'
 Plug 'leafgarland/typescript-vim'
 Plug 'maxmellon/vim-jsx-pretty'
+Plug 'xolox/vim-misc'
+Plug 'xolox/vim-lua-ftplugin'
+"Markdown
+Plug 'tpope/vim-markdown'
+Plug 'mzlogin/vim-markdown-toc'
+Plug 'cnlinbo/markdown-preview.nvim', { 'branch': 'linbo', 'do': 'cd app && yarn install' }
+"HTML
+Plug 'turbio/bracey.vim', {'do': 'npm install --prefix server'}
+"VS Code Language Servers
 Plug 'neoclide/coc.nvim', { 'branch': 'master', 'do': 'yarn install --frozen-lockfile' }
 call plug#end()
 filetype plugin indent on
@@ -192,6 +198,7 @@ autocmd FileType css setlocal expandtab shiftwidth=4 tabstop=4 softtabstop=4
 autocmd FileType html setlocal expandtab shiftwidth=2 tabstop=2 softtabstop=2
 autocmd FileType ruby setlocal expandtab shiftwidth=2 tabstop=2 softtabstop=2
 autocmd FileType typescript setlocal expandtab shiftwidth=2 tabstop=2 softtabstop=2
+autocmd FileType lua setlocal expandtab shiftwidth=2 tabstop=2 softtabstop=2
 
 " Spell-check Markdown files and Git Commit Messages
 autocmd FileType markdown setlocal spell
