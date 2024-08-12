@@ -166,6 +166,7 @@ autocmd FileType markdown let b:noStripWhitespace=1
 
 " RUBY
 let ruby_no_expensive=1
+autocmd BufNewFile *.rb norm i# frozen_string_literal: true
 
 " RUST
 let g:rustfmt_autosave = 1
