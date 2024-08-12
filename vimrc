@@ -70,6 +70,10 @@ Plug 'danro/rename.vim'
 "Linting/Normalizing
 Plug 'w0rp/ale'
 Plug 'editorconfig/editorconfig-vim'
+"Integrations
+Plug 'mattn/webapi-vim'
+Plug 'mattn/vim-gist'
+Plug 'github/copilot.vim'
 "Languages/Syntax
 Plug 'LnL7/vim-nix'
 Plug 'vim-ruby/vim-ruby'
@@ -86,7 +90,7 @@ Plug 'xolox/vim-lua-ftplugin'
 "Markdown
 Plug 'tpope/vim-markdown'
 Plug 'mzlogin/vim-markdown-toc'
-Plug 'cnlinbo/markdown-preview.nvim', { 'branch': 'linbo', 'do': 'cd app && yarn install' }
+Plug 'iamcco/markdown-preview.nvim', { 'do': 'cd app && yarn install' }
 "HTML
 Plug 'turbio/bracey.vim', {'do': 'npm install --prefix server'}
 "VS Code Language Servers
@@ -171,6 +175,8 @@ autocmd BufNewFile *.rb norm i# frozen_string_literal: true
 " RUST
 let g:rustfmt_autosave = 1
 
+set textwidth=80
+let g:goyo_width=80
 set updatetime=100
 set timeoutlen=1000 ttimeoutlen=10
 set autoindent
@@ -190,6 +196,7 @@ set signcolumn=yes "keep gutter expanded
 set wildignore+=*/.git/*,*/tmp/*,*.swp
 set nowrap
 set ve+=onemore "put cursor at end of line
+let g:gist_post_private = 1 "vim-gist
 
 " faster drawing
 set lazyredraw
