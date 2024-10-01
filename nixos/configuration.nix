@@ -115,6 +115,9 @@
   # Or disable the firewall altogether.
   # networking.firewall.enable = false;
 
+  # Steam controller support
+  hardware.steam-hardware.enable = true;
+
   # Enable CUPS to print documents.
   services.printing.enable = true;
 
