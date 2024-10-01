@@ -251,11 +251,11 @@
     enable = true;
     # wlr.enable = true;
     # lxqt.enable = true;
-    extraPortals = [
-      pkgs.xdg-desktop-portal-gnome
-      pkgs.xdg-desktop-portal-kde
-      pkgs.xdg-desktop-portal-wlr
-    ];
+    # extraPortals = [
+    #   pkgs.xdg-desktop-portal-gnome
+    #   pkgs.xdg-desktop-portal-kde
+    #   pkgs.xdg-desktop-portal-wlr
+    #];
   };
 
   # Define a user account. Don't forget to set a password with ‘passwd’.
