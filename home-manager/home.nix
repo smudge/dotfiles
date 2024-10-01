@@ -16,6 +16,7 @@
       "nm-applet --indicator"
       "waybar"
       "dunst"
+      "tmux setenv -g HYPRLAND_INSTANCE_SIGNATURE \"$HYPRLAND_INSTANCE_SIGNATURE\""
     ];
     general = {
       gaps_in = 4;
