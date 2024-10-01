@@ -85,6 +85,9 @@
   # };
 
   programs = {
+    # Enable the hyprland compositor (for Wayland)
+    hyprland.enable = true;
+
     firefox.nativeMessagingHosts.packages = [
       pkgs.gnome-browser-connector
     ];
