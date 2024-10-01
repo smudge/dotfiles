@@ -8,6 +8,77 @@
   home.username = "smudge";
   home.homeDirectory = "/home/smudge";
 
+  wayland.windowManager.hyprland.enable = true;
+  programs.waybar.enable = true;
+
+  wayland.windowManager.hyprland.settings = {
+    exec-once = [
+      "nm-applet --indicator"
+      "waybar"
+      "dunst"
+    ];
+    general = {
+      gaps_in = 4;
+      gaps_out = 8;
+    };
+    decoration = {
+      rounding = 4;
+      active_opacity = 1;
+      inactive_opacity = 0.9;
+      dim_inactive = true;
+      dim_strength = 0.1;
+    };
+    gestures = {
+      workspace_swipe = true;
+      workspace_swipe_min_fingers = 3;
+      workspace_swipe_min_speed_to_force = 15;
+    };
+    misc = {
+      disable_hyprland_logo = true;
+      disable_splash_rendering = true;
+    };
+    input = {
+      touchpad = {
+        natural_scroll = true;
+        "tap-to-click" = true;
+        clickfinger_behavior = true;
+      };
+    };
+    monitor=
+      [
+        ",preferred,auto,1"
+        "Unknown-1,disable"
+      ];
+    "$mod" = "SUPER";
+    bind =
+      [
+        "$mod, S, exec, pkill waybar || waybar"
+        "$mod, A, exec, rofi -show drun -show-icons"
+        "$mod, Q, exec, alacritty"
+        "$mod, B, exec, firefox"
+        "$mod, left, movefocus, l"
+        "$mod, right, movefocus, r"
+        "$mod, up, movefocus, u"
+        "$mod, down, movefocus, d"
+      ]
+      ++ (
+        # workspaces
+        # binds $mod + [shift +] {1..10} to [move to] workspace {1..10}
+        builtins.concatLists (builtins.genList (
+            x: let
+              ws = let
+                c = (x + 1) / 10;
+              in
+                builtins.toString (x + 1 - (c * 10));
+            in [
+              "$mod, ${ws}, workspace, ${toString (x + 1)}"
+              "$mod SHIFT, ${ws}, movetoworkspace, ${toString (x + 1)}"
+            ]
+          )
+          10)
+      );
+  };
+
   # This value determines the Home Manager release that your configuration is
   # compatible with. This helps avoid breakage when a new Home Manager release
   # introduces backwards incompatible changes.
@@ -41,6 +112,8 @@
     pkgs.firefox
     pkgs.ludusavi
     pkgs.wine64
+    pkgs.tiled
+    pkgs.discord
     # pkgs.obsidian - version of electron is insecure
 
     # # It is sometimes useful to fine-tune packages, for example, by applying
@@ -100,7 +173,7 @@
     initExtra = ''
       if type tmux &>/dev/null; then
         if [ "$TERM" == "xterm-256color" ] || [ "$TERM" == "alacritty" ]; then
-          [ -z "$TMUX"  ] && { tmux attach || exec tmux new-session && exit; }
+          [ -z "$TMUX"  ] && { exec tmux new-session && exit; }
         fi
       fi
     '';

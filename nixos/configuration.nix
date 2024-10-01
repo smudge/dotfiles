@@ -84,6 +84,13 @@
   #   enableSSHSupport = true;
   # };
 
+  environment.sessionVariables = {
+    # Fix invisible cursors on Wayland
+    WLR_NO_HARDWARE_CURSORS = "1";
+    # Hint to electron apps that they should use Wayland
+    NIXOS_OZONE_WL = "1";
+  };
+
   programs = {
     # Enable the hyprland compositor (for Wayland)
     hyprland.enable = true;
@@ -190,6 +197,14 @@
   # List packages installed in system profile. To search, run:
   # $ nix search wget
   environment.systemPackages = with pkgs; [
+    # Hyprland:
+    networkmanagerapplet
+    waybar
+    dunst
+    kitty
+    libnotify
+    rofi-wayland
+
     xclip # for neovim clipboard
     firefox
     alacritty
@@ -199,12 +214,12 @@
     gnome.gnome-screenshot
     gnome.evince
     gnome.totem
-    pkgs.gedit
+    gedit
     gnome.eog
     gnome.baobab
     gnome.file-roller
-    libinput-gestures
     touchegg
+    libinput-gestures
     # direnv
     # wget
 
@@ -213,7 +228,34 @@
     gnomeExtensions.gesture-improvements # better gestures
     gnomeExtensions.desktop-icons-ng-ding # desktop icons
     gnomeExtensions.appindicator # tray icons
+
+    # Display workspaces correctly
+    (waybar.overrideAttrs (oldAttrs: {
+        mesonFlags = oldAttrs.mesonFlags ++ [ "-Dexperimental=true" ];
+      })
+    )
   ];
+
+  # Some additional built-in fonts:
+  fonts.packages = with pkgs; [
+    font-awesome
+    powerline-fonts
+    powerline-symbols
+    (nerdfonts.override { fonts = [ "NerdFontsSymbolsOnly" ]; })
+  ];
+
+  # More Hyprland:
+  xdg.portal = {
+    xdgOpenUsePortal = true;
+    enable = true;
+    # wlr.enable = true;
+    # lxqt.enable = true;
+    extraPortals = [
+      pkgs.xdg-desktop-portal-gnome
+      pkgs.xdg-desktop-portal-kde
+      pkgs.xdg-desktop-portal-wlr
+    ];
+  };
 
   # Define a user account. Don't forget to set a password with ‘passwd’.
   users.users.smudge = {
