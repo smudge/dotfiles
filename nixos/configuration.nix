@@ -204,6 +204,7 @@
     kitty
     libnotify
     rofi-wayland
+    wl-clipboard
 
     xclip # for neovim clipboard
     firefox
