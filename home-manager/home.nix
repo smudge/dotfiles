@@ -1,84 +1,18 @@
 { config, pkgs, ... }:
 
 {
+  programs.home-manager.enable = true;
+
+  imports = [
+    ./hyprland.nix
+  ];
+
   nixpkgs.config.allowUnfree = true;
 
   # Home Manager needs a bit of information about you and the paths it should
   # manage.
   home.username = "smudge";
   home.homeDirectory = "/home/smudge";
-
-  wayland.windowManager.hyprland.enable = true;
-  programs.waybar.enable = true;
-
-  wayland.windowManager.hyprland.settings = {
-    exec-once = [
-      "nm-applet --indicator"
-      "waybar"
-      "dunst"
-      "tmux setenv -g HYPRLAND_INSTANCE_SIGNATURE \"$HYPRLAND_INSTANCE_SIGNATURE\""
-    ];
-    general = {
-      gaps_in = 4;
-      gaps_out = 8;
-    };
-    decoration = {
-      rounding = 4;
-      active_opacity = 1;
-      inactive_opacity = 0.9;
-      dim_inactive = true;
-      dim_strength = 0.1;
-    };
-    gestures = {
-      workspace_swipe = true;
-      workspace_swipe_min_fingers = 3;
-      workspace_swipe_min_speed_to_force = 15;
-    };
-    misc = {
-      disable_hyprland_logo = true;
-      disable_splash_rendering = true;
-    };
-    input = {
-      touchpad = {
-        natural_scroll = true;
-        "tap-to-click" = true;
-        clickfinger_behavior = true;
-      };
-    };
-    monitor=
-      [
-        ",preferred,auto,1"
-        "Unknown-1,disable"
-      ];
-    "$mod" = "SUPER";
-    bind =
-      [
-        "$mod, S, exec, pkill waybar || waybar"
-        "$mod, A, exec, rofi -show drun -show-icons"
-        "$mod, Q, exec, alacritty"
-        "$mod, B, exec, firefox"
-        "$mod, left, movefocus, l"
-        "$mod, right, movefocus, r"
-        "$mod, up, movefocus, u"
-        "$mod, down, movefocus, d"
-      ]
-      ++ (
-        # workspaces
-        # binds $mod + [shift +] {1..10} to [move to] workspace {1..10}
-        builtins.concatLists (builtins.genList (
-            x: let
-              ws = let
-                c = (x + 1) / 10;
-              in
-                builtins.toString (x + 1 - (c * 10));
-            in [
-              "$mod, ${ws}, workspace, ${toString (x + 1)}"
-              "$mod SHIFT, ${ws}, movetoworkspace, ${toString (x + 1)}"
-            ]
-          )
-          10)
-      );
-  };
 
   # This value determines the Home Manager release that your configuration is
   # compatible with. This helps avoid breakage when a new Home Manager release
@@ -92,9 +26,7 @@
   # The home.packages option allows you to install Nix packages into your
   # environment.
   home.packages = [
-    # # Adds the 'hello' command to your environment. It prints a friendly
-    # # "Hello, world!" when run.
-    # pkgs.hello
+    pkgs.jq # Scripting on top of Hyprland
     pkgs.autojump
     pkgs.bat
     pkgs.direnv
@@ -112,10 +44,14 @@
     pkgs.alacritty
     pkgs.firefox
     pkgs.ludusavi
-    pkgs.wine64
     pkgs.tiled
     pkgs.discord
-    # pkgs.obsidian - version of electron is insecure
+    pkgs.obsidian
+
+    pkgs.spirv-tools
+    pkgs.vulkan-validation-layers
+
+    (pkgs.wine.override { wineBuild = "wine64"; })
 
     # # It is sometimes useful to fine-tune packages, for example, by applying
     # # overrides. You can do that directly here, just don't forget the
@@ -157,7 +93,8 @@
   #
   # if you don't want to manage your shell through Home Manager.
   home.sessionVariables = {
-    # EDITOR = "emacs";
+    EDITOR = "nvim";
+    BROWSER = "firefox";
   };
 
   programs.bash = {
@@ -185,8 +122,29 @@
 
   # Enable autojump
   programs.autojump.enable = true;
-  # programs.autojump.enableBashIntegration = true;
+  programs.autojump.enableBashIntegration = true;
 
-  # Let Home Manager install and manage itself.
-  programs.home-manager.enable = true;
+  dconf = {
+    settings = {
+      "org/gnome/desktop/interface" = {
+          gtk-theme = "Adwaita-dark";
+          color-scheme = "prefer-dark";
+      };
+    };
+  };
+  gtk = {
+    enable = true;
+    theme = {
+      name = "Adwaita-dark";
+      package = pkgs.gnome.gnome-themes-extra;
+    };
+  };
+  qt = {
+    enable = true;
+    platformTheme.name = "Adwaita-dark";
+    style = {
+      name = "Adwaita-dark";
+      package = pkgs.adwaita-qt;
+    };
+  };
 }
