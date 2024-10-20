@@ -103,7 +103,7 @@
         "$mod, down, movefocus, d"
         ", Print, exec, grimblast copy area"
         ", switch:on:Lid Switch, exec, if [[ $(hyprctl monitors -j | jq 'length') > 1 ]]; then hyprctl keyword monitor \"eDP-1,disable\"; hyprlock & disown && systemctl suspend; fi"
-        ", switch:off:Lid Switch, exec, hyprctl keyword monitor \"eDP-1,preferred,auto,2\""
+        ", switch:off:Lid Switch, exec, hyprctl keyword monitor \"eDP-1,preferred,auto,2\" && hyprctl dispatch dpms on"
       ] ++ (
         # workspaces
         # binds $mod + [shift +] {1..10} to [move to] workspace {1..10}
