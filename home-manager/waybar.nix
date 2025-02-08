@@ -16,6 +16,7 @@
       height = 30;
       layer = "top";
       modules-right = [
+        "backlight"
         "pulseaudio"
         "network"
         "cpu"
@@ -26,6 +27,14 @@
         "tray"
         "custom/exit"
       ];
+      backlight = {
+        device = "intel_backlight";
+        format = "{percent}% {icon}";
+        format-icons = ["" ""];
+        on-scroll-up = "brightnessctl s 1%+";
+        on-scroll-down = "brightnessctl s 1%-";
+        on-click-right = "brightnessctl s 0";
+      };
       battery = {
         format = "{capacity}% {icon}";
         format-alt = "{time} {icon}";

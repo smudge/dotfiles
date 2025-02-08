@@ -66,8 +66,8 @@
         };
       };
       monitor = [
-        ",preferred,auto,1"
-        "eDP-1,preferred,auto,2"
+        ",preferred,auto,1,bitdepth,10"
+        "eDP-1,preferred,auto,2,bitdepth,10"
         "Unknown-1,disable"
       ];
       "$mod" = "SUPER";
@@ -81,8 +81,8 @@
       bindel = [ # e = repeat when held, l = available on lock screen
         ", XF86AudioLowerVolume, exec, pamixer --decrease 5"
         ", XF86AudioRaiseVolume, exec, pamixer --increase 5"
-        ", XF86MonBrightnessDown, exec, brillo -u 150000 -U 8"
-        ", XF86MonBrightnessUp, exec, brillo -u 150000 -A 8"
+        ", XF86MonBrightnessDown, exec, brightnessctl set 5%-"
+        ", XF86MonBrightnessUp, exec, brightnessctl set 5%+"
       ];
       bindl = [ # l = available on lock screen
         ", XF86AudioMute, exec, pamixer --toggle-mute"
