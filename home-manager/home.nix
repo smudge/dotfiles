@@ -1,9 +1,16 @@
 { config, pkgs, ... }:
 
+let
+  nixvim = import (builtins.fetchGit {
+    url = "https://github.com/nix-community/nixvim";
+    ref = "nixos-25.05";
+  });
+in
 {
   programs.home-manager.enable = true;
 
   imports = [
+    nixvim.homeModules.nixvim
     ./hyprland.nix
   ];
 
@@ -32,8 +39,8 @@
     pkgs.direnv
     pkgs.eza
     pkgs.fzf
+    pkgs.fd
     pkgs.git
-    pkgs.neovim
     pkgs.nodejs
     pkgs.rescuetime
     pkgs.ripgrep
@@ -118,6 +125,243 @@
     bashrcExtra = ''
      eval "$(direnv hook bash)"
     '';
+  };
+
+  programs.nixvim = {
+    enable = true;
+    defaultEditor = true;
+
+    # Core
+    globals = {
+      # Disable useless providers
+      loaded_ruby_provider = 0;
+      loaded_perl_provider = 0;
+      loaded_python_provider = 0;
+    };
+    editorconfig.enable = true;
+    clipboard = {
+      register = "unnamed,unnamedplus"; # system clipboard
+      providers.wl-copy.enable = true;
+    };
+    opts = {
+      mouse = "a"; # i dare you to call me lazy
+      # mousemodel = "extend";
+      wildmenu = true;
+      wildmode = "list:longest";
+
+      textwidth = 80;
+      updatetime = 100;
+      timeoutlen = 1000;
+      ttimeoutlen = 10;
+      autoread = true;
+      autowrite = true;
+      backspace = "indent,eol,start";
+      encoding = "utf8";
+      fileencoding = "utf-8";
+      fileformats = "unix,dos,mac";
+      ignorecase = true;
+      smartcase = true; # if uppercase, be case sensitive
+      incsearch = true;
+      infercase = true;
+      laststatus = 2;
+      linebreak = true;
+      # swapfile = false;
+      # hidden = true;
+      # undofile = true;
+      # scrolloff = 8;
+      # cursorline = false;
+      # cursorcolumn = false;
+      # colorcolumn = "100";
+
+      # show hidden characters
+      listchars = "tab:▸\ ,eol:¬,space:.,trail:\!";
+      list = false;
+
+      # Gutter
+      signcolumn = "yes"; # Keep expanded
+      number = true;
+      # relativenumber = true;
+
+      # Faster drawing
+      lazyredraw = true;
+      ttyfast = true;
+
+      # Default filetype options
+      tabstop = 2;
+      softtabstop = 2;
+      shiftwidth = 2;
+      expandtab = true;
+      autoindent = true;
+      spell = false;
+      wrap = false;
+    };
+
+    # Options for specific file types
+    autoCmd = [
+      {
+        event = "FileType";
+        pattern = [
+          "tex"
+          "latex"
+          "markdown"
+          "gitcommit"
+        ];
+        # Enable spellcheck and show hidden characters
+        command = "setlocal spell spelllang=en list";
+      }
+    ];
+
+    # Theme
+    colorschemes.onedark.enable = true;
+    plugins.web-devicons.enable = true;
+
+    # GUI
+    plugins.telescope = {
+      enable = true;
+      settings.defaults = {
+        layout_config = {
+          prompt_position = "top";
+          width = 0.95;
+          height = 0.95;
+        };
+        sorting_strategy = "ascending";
+        set_env = { COLORTERM = "truecolor"; };
+        file_ignore_patterns = [
+          "^.git/"
+          "^.mypy_cache/"
+          "^tmp/"
+          "^log/"
+          "^__pycache__/"
+          "^output/"
+          "^data/"
+          "%.ipynb"
+        ];
+        mappings = {
+          i = {
+            "<C-j>" = {
+              __raw = "require('telescope.actions').move_selection_next";
+            };
+            "<C-k>" = {
+              __raw = "require('telescope.actions').move_selection_previous";
+            };
+          };
+        };
+      };
+    };
+    plugins.treesitter.enable = true; # needed for telescope
+    keymaps = [
+      {
+        action = ":Telescope find_files<CR>";
+        key = "<C-p>";
+        mode = "n";
+      }
+      {
+        action = ":Telescope live_grep<CR>";
+        key = "<A-p>";
+        mode = "n";
+      }
+    ];
+    plugins.airline.enable = true;
+    plugins.airline.settings.powerline_fonts = 1;
+    extraConfigVim = ''
+      let g:airline#parts#ffenc#skip_expected_string='utf-8[unix]' " hide the type if it's expected
+      let g:airline#extensions#hunks#enabled=0
+      let g:airline#extensions#branch#enabled=1
+      let g:airline#extensions#tabline#enabled=1
+      let g:airline#extensions#tabline#buffer_min_count = 2
+      let g:airline#extensions#tabline#formatter = 'unique_tail_improved'
+
+      if (has("nvim"))
+        let $NVIM_TUI_ENABLE_TRUE_COLOR=1
+      endif
+      if (has("termguicolors"))
+        set termguicolors
+      endif
+    '';
+
+    # LSP & Languages
+    lsp = {
+      inlayHints.enable = true;
+      servers = {
+        clangd.enable = true;
+        texlab.enable = true; # inria
+        lua_ls = {
+          enable = true;
+          settings.settings.diagnostics.globals = [ "vim" ];
+        };
+      };
+    };
+    plugins.lsp-format = {
+      enable = true;
+      lspServersToEnable = "all";
+    };
+    plugins.lspconfig.enable = true; # sane defaults
+
+    # Auto-Trim Whitespace
+    plugins.trim = {
+      enable = true;
+      settings = {
+        highlight = true;
+        ft_blocklist = [
+          "markdown"
+          "checkhealth"
+          "lspinfo"
+          "neo-tree"
+        ];
+      };
+    };
+
+    # Additional plugins
+    plugins = {
+      # Editor
+      startify.enable = true;
+      gitgutter.enable = true;
+      yanky = {
+        enable = true;
+        settings.highlight.timer = 300; # default 500
+      };
+      goyo.enable = true;
+      # limelight.enable = true;
+      tmux-navigator.enable = true;
+
+      # Files/Git/Search
+      fugitive.enable = true;
+      neo-tree.enable = true;
+      # fzf-lua.enable = true;
+
+      # Linting/Normalizing
+      # ale.enable = true;
+
+      # Integrations
+      # webapi.enable = true;
+      # gist.enable = true;
+      # copilot-vim.enable = true;
+
+      # Languages/Syntax
+      nix.enable = true;
+      # ruby.enable = true;
+      # rails.enable = true;
+      endwise.enable = true;
+      vim-surround.enable = true;
+      # rake.enable = true;
+      # rust.enable = true;
+      # javascript.enable = true;
+      # typescript.enable = true;
+      # jsx-pretty.enable = true;
+      # vim-misc.enable = true;
+      # vim-lua-ftplugin.enable = true;
+
+      # Markdown
+      # markdown.enable = true;
+      # vim-markdown-toc.enable = true;
+      markdown-preview.enable = true;
+
+      # HTML
+      # bracey.enable = true;
+
+      # VS Code Language Servers
+      # coc-nvim.enable = true;
+    };
   };
 
   # Enable autojump
