@@ -5,6 +5,15 @@ let
     url = "https://github.com/nix-community/nixvim";
     ref = "nixos-25.05";
   });
+  vim-airline-themes = pkgs.vimUtils.buildVimPlugin {
+    name = "vim-airline-themes";
+    src = pkgs.fetchFromGitHub {
+      owner = "vim-airline";
+      repo = "vim-airline-themes";
+      rev = "77aab8c6cf7179ddb8a05741da7e358a86b2c3ab";
+      sha256 = "xTgitX/kL8m/zjcxjCe4WWvhKfVPS284GoZjWkWc/gY=";
+    };
+  };
 in
 {
   programs.home-manager.enable = true;
@@ -362,6 +371,10 @@ in
       # VS Code Language Servers
       # coc-nvim.enable = true;
     };
+
+    extraPlugins = [
+      vim-airline-themes
+    ];
   };
 
   # Enable autojump
