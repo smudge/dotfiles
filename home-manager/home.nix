@@ -120,7 +120,6 @@ in
       ls = "eza";
       cat = "bat --paging=never --style=plain";
       du = "ncdu --color dark -rr -x --exclude .git --exclude node_modules";
-      j = "autojump";
       vim = "nvim";
       vi = "nvim";
     };
