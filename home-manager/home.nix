@@ -14,6 +14,9 @@ let
       sha256 = "xTgitX/kL8m/zjcxjCe4WWvhKfVPS284GoZjWkWc/gY=";
     };
   };
+  inherit (pkgs) lib;
+  hostPlatform = pkgs.stdenv.hostPlatform;
+  isWindowsHost = if hostPlatform ? isWindows then hostPlatform.isWindows else false;
 in
 {
   programs.home-manager.enable = true;
@@ -41,47 +44,55 @@ in
 
   # The home.packages option allows you to install Nix packages into your
   # environment.
-  home.packages = [
-    pkgs.jq # Scripting on top of Hyprland
-    pkgs.autojump
-    pkgs.bat
-    pkgs.direnv
-    pkgs.eza
-    pkgs.fzf
-    pkgs.fd
-    pkgs.git
-    pkgs.nodejs
-    pkgs.rescuetime
-    pkgs.ripgrep
-    pkgs.rustup
-    pkgs.tmux
-    pkgs.yarn
-    pkgs.hasklig
-    pkgs.alacritty
-    pkgs.firefox
-    pkgs.ludusavi
-    pkgs.tiled
-    pkgs.discord
-    pkgs.obsidian
+  home.packages =
+    [
+      pkgs.jq # Scripting on top of Hyprland
+      pkgs.autojump
+      pkgs.bat
+      pkgs.direnv
+      pkgs.eza
+      pkgs.fzf
+      pkgs.fd
+      pkgs.git
+      pkgs.nodejs
+      pkgs.rescuetime
+      pkgs.ripgrep
+      pkgs.rustup
+      pkgs.tmux
+      pkgs.yarn
+      pkgs.hasklig
+      pkgs.alacritty
+      pkgs.firefox
+      pkgs.ludusavi
+      pkgs.tiled
+      pkgs.discord
+      pkgs.obsidian
 
-    pkgs.spirv-tools
-    pkgs.vulkan-validation-layers
+      pkgs.spirv-tools
+      pkgs.vulkan-validation-layers
 
-    (pkgs.wine.override { wineBuild = "wine64"; })
+      (pkgs.wine.override { wineBuild = "wine64"; })
 
-    # # It is sometimes useful to fine-tune packages, for example, by applying
-    # # overrides. You can do that directly here, just don't forget the
-    # # parentheses. Maybe you want to install Nerd Fonts with a limited number of
-    # # fonts?
-    # (pkgs.nerdfonts.override { fonts = [ "FantasqueSansMono" ]; })
+      # # It is sometimes useful to fine-tune packages, for example, by applying
+      # # overrides. You can do that directly here, just don't forget the
+      # # parentheses. Maybe you want to install Nerd Fonts with a limited number of
+      # # fonts?
+      # (pkgs.nerdfonts.override { fonts = [ "FantasqueSansMono" ]; })
 
-    # # You can also create simple shell scripts directly inside your
-    # # configuration. For example, this adds a command 'my-hello' to your
-    # # environment:
-    # (pkgs.writeShellScriptBin "my-hello" ''
-    #   echo "Hello, ${config.home.username}!"
-    # '')
-  ];
+      # # You can also create simple shell scripts directly inside your
+      # # configuration. For example, this adds a command 'my-hello' to your
+      # # environment:
+      # (pkgs.writeShellScriptBin "my-hello" ''
+      #   echo "Hello, ${config.home.username}!"
+      # '')
+    ]
+    ++ lib.optionals pkgs.stdenv.isLinux [
+      pkgs.wl-clipboard
+      pkgs.xclip
+    ]
+    ++ lib.optionals isWindowsHost [
+      pkgs.win32yank
+    ];
 
   # Home Manager is pretty good at managing dotfiles. The primary way to manage
   # plain files is through 'home.file'.
@@ -146,7 +157,9 @@ in
       set -g status off
       set -ga terminal-overrides ',*256col*:Tc'
       set -g default-terminal "screen-256color"
+      set -g set-clipboard on
       set-option -s escape-time 10
+      set -ga update-environment " WAYLAND_DISPLAY WAYLAND_SOCKET XDG_RUNTIME_DIR"
 
       bind -n WheelUpPane if-shell -F -t = "#{mouse_any_flag}" "send-keys -M" "if -Ft= '#{pane_in_mode}' 'send-keys -M' 'select-pane -t=; copy-mode -e; send-keys -M'"
       bind -n WheelDownPane select-pane -t= \; send-keys -M
@@ -155,6 +168,8 @@ in
       bind j select-pane -D
       bind k select-pane -U
       bind l select-pane -R
+      bind -n C-S-Left previous-window
+      bind -n C-S-Right next-window
     '';
   };
 
@@ -172,7 +187,11 @@ in
     editorconfig.enable = true;
     clipboard = {
       register = "unnamed,unnamedplus"; # system clipboard
-      providers.wl-copy.enable = true;
+      providers =
+        lib.optionalAttrs pkgs.stdenv.isLinux {
+          wl-copy.enable = true;
+          xclip.enable = true;
+        };
     };
     opts = {
       mouse = "a"; # i dare you to call me lazy
@@ -309,6 +328,33 @@ in
         set termguicolors
       endif
     '';
+    extraConfigLua = ''
+      local function has_system_provider()
+        return vim.fn.executable("wl-copy") == 1
+          or vim.fn.executable("xclip") == 1
+          or vim.fn.executable("pbcopy") == 1
+          or vim.fn.executable("win32yank.exe") == 1
+      end
+      if vim.env.TMUX and not has_system_provider() then
+        local ok, osc52 = pcall(require, "osc52")
+        if ok then
+          osc52.setup({ trim = true })
+          local function copy(lines, _)
+            osc52.copy(table.concat(lines, "\n"))
+          end
+          local function paste()
+            local reg = vim.fn.getreg('"', 1, true)
+            local regtype = vim.fn.getregtype('"')
+            return { reg, regtype }
+          end
+          vim.g.clipboard = {
+            name = "osc52",
+            copy = { ["+"] = copy, ["*"] = copy },
+            paste = { ["+"] = paste, ["*"] = paste },
+          }
+        end
+      end
+    '';
 
     # LSP & Languages
     lsp = {
@@ -394,8 +440,9 @@ in
       # coc-nvim.enable = true;
     };
 
-    extraPlugins = [
+    extraPlugins = with pkgs.vimPlugins; [
       vim-airline-themes
+      nvim-osc52
     ];
   };
 
