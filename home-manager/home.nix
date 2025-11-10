@@ -335,24 +335,32 @@ in
           or vim.fn.executable("pbcopy") == 1
           or vim.fn.executable("win32yank.exe") == 1
       end
-      if vim.env.TMUX and not has_system_provider() then
+
+      local function setup_osc52()
         local ok, osc52 = pcall(require, "osc52")
-        if ok then
-          osc52.setup({ trim = true })
-          local function copy(lines, _)
-            osc52.copy(table.concat(lines, "\n"))
-          end
-          local function paste()
-            local reg = vim.fn.getreg('"', 1, true)
-            local regtype = vim.fn.getregtype('"')
-            return { reg, regtype }
-          end
-          vim.g.clipboard = {
-            name = "osc52",
-            copy = { ["+"] = copy, ["*"] = copy },
-            paste = { ["+"] = paste, ["*"] = paste },
-          }
+        if not ok then
+          return
         end
+        osc52.setup({ trim = true })
+        local function copy(lines, _)
+          osc52.copy(table.concat(lines, "\n"))
+        end
+        local function paste()
+          local reg = vim.fn.getreg('"', 1, true)
+          local regtype = vim.fn.getregtype('"')
+          return { reg, regtype }
+        end
+        vim.g.clipboard = {
+          name = "osc52",
+          copy = { ["+"] = copy, ["*"] = copy },
+          paste = { ["+"] = paste, ["*"] = paste },
+        }
+      end
+
+      if vim.env.TMUX then
+        setup_osc52()
+      elseif not has_system_provider() then
+        setup_osc52()
       end
     '';
 
