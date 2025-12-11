@@ -61,6 +61,7 @@ Plug 'machakann/vim-highlightedyank'
 Plug 'junegunn/goyo.vim'
 Plug 'junegunn/limelight.vim'
 Plug 'christoomey/vim-tmux-navigator'
+Plug 'TaDaa/vimade'
 "Files/Git/Search
 Plug 'tpope/vim-fugitive'
 Plug 'scrooloose/nerdtree'

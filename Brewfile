@@ -1,4 +1,3 @@
-tap 'homebrew/cask-fonts'
 tap 'smudge/smudge'
 
 brew 'autojump'
