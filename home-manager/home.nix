@@ -23,7 +23,6 @@ in
 
   imports = [
     nixvim.homeModules.nixvim
-    ./hyprland.nix
   ];
 
   nixpkgs.config.allowUnfree = true;
