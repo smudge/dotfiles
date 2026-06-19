@@ -3,7 +3,7 @@
 let
   nixvim = import (builtins.fetchGit {
     url = "https://github.com/nix-community/nixvim";
-    ref = "nixos-25.05";
+    ref = "nixos-26.05";
   });
   vim-airline-themes = pkgs.vimUtils.buildVimPlugin {
     name = "vim-airline-themes";
