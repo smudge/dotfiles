@@ -68,6 +68,9 @@ in
       pkgs.discord
       pkgs.obsidian
 
+      pkgs.codex
+      pkgs.claude-code
+
       pkgs.spirv-tools
       pkgs.vulkan-validation-layers
 
