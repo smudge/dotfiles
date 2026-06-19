@@ -10,7 +10,7 @@
     playerctl
     pamixer
     grimblast
-    rofi-wayland
+    rofi
     libnotify
     dunst
     hyprlock
