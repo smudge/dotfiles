@@ -15,10 +15,10 @@
   inputs = {
     dotfiles.url = "github:smudge/dotfiles?dir=home-manager";
 
-    # Optional: on a machine with a system-level nixpkgs registry entry (e.g.
-    # smudgenix), share the system's pinned nixpkgs instead of a separate one.
-    # nixpkgs.url = "flake:nixpkgs";
-    # dotfiles.inputs.nixpkgs.follows = "nixpkgs";
+    # Optional: on a smudgenix host, share the system's pinned nixpkgs (from
+    # /etc/nixos/flake.lock) instead of locking a separate one:
+    # system.url = "path:/etc/nixos";
+    # dotfiles.inputs.nixpkgs.follows = "system/nixos/nixpkgs";
   };
 
   outputs = { dotfiles, ... }: {
