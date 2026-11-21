@@ -39,7 +39,7 @@ in
   # You should not change this value, even if you update Home Manager. If you do
   # want to update the value, then make sure to first check the Home Manager
   # release notes.
-  home.stateVersion = "24.05"; # Please read the comment before changing.
+  home.stateVersion = "26.05"; # Please read the comment before changing.
 
   # The home.packages option allows you to install Nix packages into your
   # environment.
@@ -69,6 +69,8 @@ in
 
       pkgs.codex
       pkgs.claude-code
+      pkgs.opencode
+      pkgs.gh
 
       pkgs.spirv-tools
       pkgs.vulkan-validation-layers
