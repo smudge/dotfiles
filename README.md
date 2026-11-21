@@ -4,6 +4,11 @@ These are very much a work-in-progress. My goal is to use these to maintain simi
 
 ## getting started
 
+### nix (home-manager)
+
+My Nix userland (home-manager) config now lives in
+[smudgenix](https://github.com/smudge/smudgenix) (`nix/`); see its README.
+
 ### macOS
 
 After cloning this repo, simply type:
