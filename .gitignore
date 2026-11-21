@@ -1,2 +1,5 @@
 .DS_Store
 *.swp
+
+# Lockfiles belong to the per-host flake (~/.config/home-manager), not here.
+home-manager/flake.lock
