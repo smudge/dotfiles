@@ -1,182 +1,6 @@
-{ config, pkgs, ... }:
+{ pkgs, lib, ... }:
 
-let
-  nixvim = import (builtins.fetchGit {
-    url = "https://github.com/nix-community/nixvim";
-    ref = "nixos-26.05";
-  });
-  vim-airline-themes = pkgs.vimUtils.buildVimPlugin {
-    name = "vim-airline-themes";
-    src = pkgs.fetchFromGitHub {
-      owner = "vim-airline";
-      repo = "vim-airline-themes";
-      rev = "77aab8c6cf7179ddb8a05741da7e358a86b2c3ab";
-      sha256 = "xTgitX/kL8m/zjcxjCe4WWvhKfVPS284GoZjWkWc/gY=";
-    };
-  };
-  inherit (pkgs) lib;
-  hostPlatform = pkgs.stdenv.hostPlatform;
-  isWindowsHost = if hostPlatform ? isWindows then hostPlatform.isWindows else false;
-in
 {
-  programs.home-manager.enable = true;
-
-  imports = [
-    nixvim.homeModules.nixvim
-  ];
-
-  nixpkgs.config.allowUnfree = true;
-
-  # Home Manager needs a bit of information about you and the paths it should
-  # manage.
-  home.username = "smudge";
-  home.homeDirectory = "/home/smudge";
-
-  # This value determines the Home Manager release that your configuration is
-  # compatible with. This helps avoid breakage when a new Home Manager release
-  # introduces backwards incompatible changes.
-  #
-  # You should not change this value, even if you update Home Manager. If you do
-  # want to update the value, then make sure to first check the Home Manager
-  # release notes.
-  home.stateVersion = "26.05"; # Please read the comment before changing.
-
-  # The home.packages option allows you to install Nix packages into your
-  # environment.
-  home.packages =
-    [
-      pkgs.jq # Scripting on top of Hyprland
-      pkgs.autojump
-      pkgs.bat
-      pkgs.direnv
-      pkgs.eza
-      pkgs.fzf
-      pkgs.fd
-      pkgs.git
-      pkgs.nodejs
-      pkgs.rescuetime
-      pkgs.ripgrep
-      pkgs.rustup
-      pkgs.tmux
-      pkgs.yarn
-      pkgs.hasklig
-      pkgs.alacritty
-      pkgs.firefox
-      pkgs.ludusavi
-      pkgs.tiled
-      pkgs.discord
-      pkgs.obsidian
-
-      pkgs.codex
-      pkgs.claude-code
-      pkgs.opencode
-      pkgs.gh
-
-      pkgs.spirv-tools
-      pkgs.vulkan-validation-layers
-
-      (pkgs.wine.override { wineBuild = "wine64"; })
-
-      # # It is sometimes useful to fine-tune packages, for example, by applying
-      # # overrides. You can do that directly here, just don't forget the
-      # # parentheses. Maybe you want to install Nerd Fonts with a limited number of
-      # # fonts?
-      # (pkgs.nerdfonts.override { fonts = [ "FantasqueSansMono" ]; })
-
-      # # You can also create simple shell scripts directly inside your
-      # # configuration. For example, this adds a command 'my-hello' to your
-      # # environment:
-      # (pkgs.writeShellScriptBin "my-hello" ''
-      #   echo "Hello, ${config.home.username}!"
-      # '')
-    ]
-    ++ lib.optionals pkgs.stdenv.isLinux [
-      pkgs.wl-clipboard
-      pkgs.xclip
-    ]
-    ++ lib.optionals isWindowsHost [
-      pkgs.win32yank
-    ];
-
-  # Home Manager is pretty good at managing dotfiles. The primary way to manage
-  # plain files is through 'home.file'.
-  home.file = {
-    # # Building this configuration will create a copy of 'dotfiles/screenrc' in
-    # # the Nix store. Activating the configuration will then make '~/.screenrc' a
-    # # symlink to the Nix store copy.
-    # ".screenrc".source = dotfiles/screenrc;
-
-    # # You can also set the file content immediately.
-    # ".gradle/gradle.properties".text = ''
-    #   org.gradle.console=verbose
-    #   org.gradle.daemon.idletimeout=3600000
-    # '';
-  };
-
-  # You can also manage environment variables but you will have to manually
-  # source
-  #
-  #  ~/.nix-profile/etc/profile.d/hm-session-vars.sh
-  #
-  # or
-  #
-  #  /etc/profiles/per-user/smudge/etc/profile.d/hm-session-vars.sh
-  #
-  # if you don't want to manage your shell through Home Manager.
-  home.sessionVariables = {
-    EDITOR = "nvim";
-    BROWSER = "firefox";
-  };
-
-  programs.bash = {
-    enable = true;
-    enableCompletion = true;
-    shellAliases = {
-      ls = "eza";
-      cat = "bat --paging=never --style=plain";
-      du = "ncdu --color dark -rr -x --exclude .git --exclude node_modules";
-      vim = "nvim";
-      vi = "nvim";
-    };
-    initExtra = ''
-      if type tmux &>/dev/null; then
-        if [ "$TERM" == "xterm-256color" ] || [ "$TERM" == "alacritty" ]; then
-          [ -z "$TMUX"  ] && { exec tmux new-session && exit; }
-        fi
-      fi
-    '';
-    bashrcExtra = ''
-     eval "$(direnv hook bash)"
-    '';
-  };
-
-  programs.tmux = {
-    enable = true;
-    plugins = with pkgs.tmuxPlugins; [
-      sensible
-      vim-tmux-navigator
-    ];
-    extraConfig = ''
-      set -g mouse on
-      set -g status off
-      set -ga terminal-overrides ',*256col*:Tc'
-      set -g default-terminal "screen-256color"
-      set -g set-clipboard on
-      set-option -s escape-time 10
-      set -ga update-environment " WAYLAND_DISPLAY WAYLAND_SOCKET XDG_RUNTIME_DIR"
-
-      bind -n WheelUpPane if-shell -F -t = "#{mouse_any_flag}" "send-keys -M" "if -Ft= '#{pane_in_mode}' 'send-keys -M' 'select-pane -t=; copy-mode -e; send-keys -M'"
-      bind -n WheelDownPane select-pane -t= \; send-keys -M
-
-      bind h select-pane -L
-      bind j select-pane -D
-      bind k select-pane -U
-      bind l select-pane -R
-      bind -n C-S-Left previous-window
-      bind -n C-S-Right next-window
-    '';
-  };
-
   programs.nixvim = {
     enable = true;
     defaultEditor = true;
@@ -192,7 +16,7 @@ in
     clipboard = {
       register = "unnamed,unnamedplus"; # system clipboard
       providers =
-        lib.optionalAttrs pkgs.stdenv.isLinux {
+        lib.optionalAttrs pkgs.stdenv.hostPlatform.isLinux {
           wl-copy.enable = true;
           xclip.enable = true;
         };
@@ -376,7 +200,7 @@ in
         texlab.enable = true; # inria
         lua_ls = {
           enable = true;
-          settings.settings.diagnostics.globals = [ "vim" ];
+          config.settings.diagnostics.globals = [ "vim" ];
         };
       };
     };
@@ -456,33 +280,5 @@ in
       vim-airline-themes
       nvim-osc52
     ];
-  };
-
-  # Enable autojump
-  programs.autojump.enable = true;
-  programs.autojump.enableBashIntegration = true;
-
-  dconf = {
-    settings = {
-      "org/gnome/desktop/interface" = {
-          gtk-theme = "Adwaita-dark";
-          color-scheme = "prefer-dark";
-      };
-    };
-  };
-  gtk = {
-    enable = true;
-    theme = {
-      name = "Adwaita-dark";
-      package = pkgs.gnome-themes-extra;
-    };
-  };
-  qt = {
-    enable = true;
-    platformTheme.name = "Adwaita-dark";
-    style = {
-      name = "Adwaita-dark";
-      package = pkgs.adwaita-qt;
-    };
   };
 }
